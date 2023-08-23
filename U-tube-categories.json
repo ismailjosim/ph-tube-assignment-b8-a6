@@ -1,0 +1,26 @@
+[
+  {
+    "Catrgory_Id": "1000",
+    "Category": "All"
+  },
+  {
+    "Catrgory_Id": "1001",
+    "Category": "Music"
+  },
+  {
+    "Catrgory_Id": "1002",
+    "Category": "Religious"
+  },
+  {
+    "Catrgory_Id": "1003",
+    "Category": "Comedy"
+  },
+  {
+    "Catrgory_Id": "1004",
+    "Category": "Movies"
+  },
+  {
+    "Catrgory_Id": "1005",
+    "Category": "Drawing"
+  }
+]

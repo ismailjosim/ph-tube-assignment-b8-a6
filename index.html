@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer sale Landing page</title>
+    <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon">
+    <!-- Google Fonts Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS & DaisyUI CDN Link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.4.0/dist/full.css" rel="stylesheet" type="text/css" />
+
+    <!-- Font awesome CDN Link -->
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <!-- Tailwind CSS Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF1F3D",
+                        "secondary": "#F8F8F8",
+                        "body": "#171717",
+                        "accent": "#E527B2",
+                        "rgb": "rgba(37, 37, 37, 0.20)"
+                    },
+                    fontFamily: {
+                        'work': 'Work Sans'
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Header section start -->
+    <header class="w-11/12 mx-auto border-b-2">
+        <div class="navbar bg-base-100">
+            <div class="navbar-start">
+                <img src="./assets/logo.png" alt="">
+            </div>
+            <div class="navbar-center">
+                <a class="text-lg font-semibold btn btn-sm bg-rbg capitalize">Sort By View</a>
+            </div>
+            <div class="navbar-end">
+                <button
+                    class="btn btn-primary bg-primary btn-sm capitalize border-primary hover:text-primary hover:border-secondary hover:bg-body">Blog</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- categories section start -->
+        <section id="categories" class="w-11/12 mx-auto text-center">
+            <ul id="category_items" class="my-5 flex justify-center items-center gap-5 flex-wrap"></ul>
+        </section>
+        <!-- categories section Ends -->
+        <!-- All Video Cards section start -->
+        <section id="cards" class="w-11/12 mx-auto grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
+
+        </section>
+        <!-- All Video Cards section Ends -->
+    </main>
+    <script src="./app.js"></script>
+</body>
+
+</html>
