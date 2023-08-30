@@ -1,0 +1,31 @@
+Time in My work
+--------------
+Sat => Weekend => 24 Hours
+
+sun => Weekend => 24 Hours
+
+mon => Working Time (support session 4 Hours + GM 2 Hours => 6 Hours) rest = 18 Hours.
+
+tue => Working Time (support session 2 Hours + GM 1 Hour => 3 Hours) rest = 21 Hours.
+
+wed => Working Time (support session 2hours + GM 1.30 Hours => 3.30 Hours) rest = 21.30 Hours.
+
+thu => Working Time (support session 4 Hours + GM 1.30 Hours => 5.30 Hours) rest = 18.30 Hours.
+
+fri => Working Time (support session 2 Hours + GM 2 Hours => 4 Hours) rest  = 20 Hours.
+
+Time in Learning
+==============>
+(24 Hours)Sat =>
+
+(24 Hours)sun =>
+
+(18 Hours)mon => Sleep 6
+
+(21 Hours)tue =>
+
+(21.30 Hours)wed =>
+
+(18.30 Hours)thu =>
+
+(20 Hours)fri =>

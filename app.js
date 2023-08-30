@@ -55,8 +55,10 @@ const fetchDataByCategories = (id) => {
             data?.data?.forEach((item) => {
                 const { verified, title, thumbnail, authors, others } = item;
 
-                const convertedTime = convertSecondsToTime(others?.posted_date);
-
+                let convertedTime;
+                if (others?.posted_date) {
+                    convertedTime = convertSecondsToTime(others?.posted_date);
+                }
                 // Conditionally render verified badge
                 const verifiedBadge = verified
                     ? `<img src="./assets/verified.svg" alt="Verified" />`
@@ -64,35 +66,32 @@ const fetchDataByCategories = (id) => {
 
                 // Build the HTML for a single card
                 const cardHTML = `
-                    <div class="card w-full bg-base-100 shadow-2xl relative">
-                            <img src="${ thumbnail }" class="max-h-40 rounded-md" alt="" />
-                                 <div class="badge badge-lg rounded-lg px-3 border-black badge-primary text-white bg-black absolute top-32 right-2 ">
-                                 ${ others.posted_date && convertedTime }
-                                 </div>
-
-                        <div class="card-body flex-row gap-5 px-5">
-                            <div>
-                                <img class="w-16 h-16 rounded-full" src="${ authors[0].profile_picture }" alt="">
-                            </div>
-                            <div>
-                                <h2 class="text-base font-semibold">
-                                    ${ title }
-                                </h2>
-                                <h3 class="flex gap-2 items-center py-2">
-                                    <span>${ authors[0].profile_name }</span>
-                                    ${ verifiedBadge }
-
-                                </h3>
-                                <p>${ others.views } Views</p>
-                            </div>
-                        </div>
+            <div class="card w-full bg-base-100 shadow-2xl relative">
+                <img src="${ thumbnail }" class="max-h-40 rounded-md" alt="" />
+                ${ convertedTime ? `
+                <div
+                    class="badge badge-lg rounded-lg px-3 border-black badge-primary text-white bg-black absolute top-32 right-2">
+                    ${ convertedTime }
+                </div>` : '' }
+                <div class="card-body flex-row gap-5 px-5">
+                    <div>
+                        <img class="w-16 h-16 rounded-full" src="${ authors[0].profile_picture }" alt="">
                     </div>
-                `
-
-                allCardsHTML += cardHTML // Accumulate card HTML
+                    <div>
+                        <h2 class="text-base font-semibold">
+                            ${ title }
+                        </h2>
+                        <h3 class="flex gap-2 items-center py-2">
+                            <span>${ authors[0].profile_name }</span>
+                            ${ verifiedBadge }
+                        </h3>
+                        <p>${ others.views } Views</p>
+                    </div>
+                </div>
+            </div>
+            `
+                allCardsHTML += cardHTML
             })
-
-            // Set the accumulated HTML to the cardsEl
             cardsEl.innerHTML = allCardsHTML
         })
 }
