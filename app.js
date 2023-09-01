@@ -1,5 +1,8 @@
 const category_items = document.getElementById('category_items')
-const cardsEl = document.getElementById('cards')
+const cardsEl = document.getElementById('cards');
+const emptyContentEl = document.getElementById('empty-content')
+
+
 
 // Fetch all categories data from JSON file
 const fetchData = () => {
@@ -7,52 +10,55 @@ const fetchData = () => {
         .then((res) => res.json())
         .then((data) => {
             data?.data?.forEach((item) => {
-                const li = document.createElement('li')
-                li.innerHTML = `
-                    <span class="text-lg font-semibold btn btn-sm bg-rbg capitalize hover:bg-primary hover:text-white rounded-md"
-                        id=${ item.category_id }
-                    >
-                        ${ item.category }
-                    </span>
-                `
-                // add click event to that particular li element
-                li.querySelector('span').addEventListener('click', () => {
-                    const categoryId = item.category_id
-                    fetchDataByCategories(categoryId)
-                })
-                category_items.appendChild(li) // Append the created li to category_items
-            })
-        })
-}
-fetchData()
+                const li = document.createElement('li');
+                const span = document.createElement('span');
+                span.className = 'text-lg font-semibold btn btn-sm bg-rbg capitalize hover:bg-primary hover:text-white rounded-md';
+                span.id = item.category_id;
+                span.textContent = item.category;
+                li.appendChild(span);
+
+                // add click event to that particular span element
+                span.addEventListener('click', () => {
+                    const categoryId = item.category_id;
+                    fetchDataByCategories(categoryId);
+                });
+
+                category_items.appendChild(li); // Append the created li to category_items
+            });
+        });
+};
+
+
+
 
 const fetchDataByCategories = (id) => {
-    const categoryId = id ? id : 1000
 
+    const categoryId = id ? id : 1000;
     fetch(
         `https://openapi.programming-hero.com/api/videos/category/${ categoryId }`,
     )
         .then((res) => res.json())
         .then((data) => {
+            data?.data.sort((a, b) => {
+                const totalViewsStrFirst = a.others?.views;
+                const totalViewsStrSecond = b.others?.views;
+                const viewFirst = parseFloat(totalViewsStrFirst.replace("K", "")) || 0;
+                const viewSecond = parseFloat(totalViewsStrSecond.replace("K", "")) || 0;
+                return viewSecond - viewFirst;
+            })
 
-
-
-
-            let allCardsHTML = '' // Accumulator for all cards' HTML
-
+            let allCardsHTML = '';
             if (data?.data.length === 0) {
-                return cardsEl.innerHTML = `
-        <div class="flex flex-col gap-5 justify-center items-center mt-[10%]">
-            <img src="./assets/error-icon.svg" alt="">
-            <h3 class="text-3xl font-bold w-1/2 mx-auto text-center">
-                Oops!! Sorry, There is no content here
-            </h3>
-        </div>`
+                emptyContentEl.classList.remove('hidden')
+            } else {
+                emptyContentEl.classList.add('hidden')
             }
 
 
-
             data?.data?.forEach((item) => {
+
+
+
                 const { verified, title, thumbnail, authors, others } = item;
 
                 let convertedTime;
@@ -109,3 +115,15 @@ function convertSecondsToTime(seconds) {
 
     return `${ hoursText } ${ minutesText } ago`;
 }
+
+// Sort By View Button function
+const sortViewBtn = document.querySelector("#sortViewBtn");
+sortViewBtn.addEventListener('click', () => {
+    let sortByDate = false;
+    sortByDate = !sortByDate;
+    // fetchDataByCategories(null, sortByDate);
+})
+
+
+
+fetchData();
