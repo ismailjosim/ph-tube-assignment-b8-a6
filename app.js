@@ -2,7 +2,8 @@ const category_items = document.getElementById('category_items')
 const cardsEl = document.getElementById('cards');
 const emptyContentEl = document.getElementById('empty-content')
 
-
+let selectedCategoryId = null;
+let sortByView = false;
 
 // Fetch all categories data from JSON file
 const fetchData = () => {
@@ -19,8 +20,8 @@ const fetchData = () => {
 
                 // add click event to that particular span element
                 span.addEventListener('click', () => {
-                    const categoryId = item.category_id;
-                    fetchDataByCategories(categoryId);
+                    selectedCategoryId = item.category_id;
+                    fetchDataByCategories(selectedCategoryId);
                 });
 
                 category_items.appendChild(li); // Append the created li to category_items
@@ -29,9 +30,16 @@ const fetchData = () => {
 };
 
 
+// Sort By View Button function
+const sortViewBtn = document.querySelector("#sortViewBtn");
+sortViewBtn.addEventListener('click', () => {
+    // Toggle the sorting order
+    sortByView = true;
+    // Re-fetch data with the current sorting order
+    fetchDataByCategories(selectedCategoryId, sortByView);
+});
 
-
-const fetchDataByCategories = (id) => {
+const fetchDataByCategories = (id, sortByView) => {
 
     const categoryId = id ? id : 1000;
     fetch(
@@ -39,26 +47,24 @@ const fetchDataByCategories = (id) => {
     )
         .then((res) => res.json())
         .then((data) => {
-            data?.data.sort((a, b) => {
-                const totalViewsStrFirst = a.others?.views;
-                const totalViewsStrSecond = b.others?.views;
-                const viewFirst = parseFloat(totalViewsStrFirst.replace("K", "")) || 0;
-                const viewSecond = parseFloat(totalViewsStrSecond.replace("K", "")) || 0;
-                return viewSecond - viewFirst;
-            })
+            if (sortByView) {
+                data?.data.sort((a, b) => {
+                    const totalViewsStrFirst = a.others?.views;
+                    const totalViewsStrSecond = b.others?.views;
+                    const viewFirst = parseFloat(totalViewsStrFirst.replace("K", "")) || 0;
+                    const viewSecond = parseFloat(totalViewsStrSecond.replace("K", "")) || 0;
+                    return viewSecond - viewFirst;
+                })
+            }
 
-            let allCardsHTML = '';
             if (data?.data.length === 0) {
                 emptyContentEl.classList.remove('hidden')
             } else {
                 emptyContentEl.classList.add('hidden')
             }
 
-
+            let allCardsHTML = '';
             data?.data?.forEach((item) => {
-
-
-
                 const { verified, title, thumbnail, authors, others } = item;
 
                 let convertedTime;
@@ -115,15 +121,6 @@ function convertSecondsToTime(seconds) {
 
     return `${ hoursText } ${ minutesText } ago`;
 }
-
-// Sort By View Button function
-const sortViewBtn = document.querySelector("#sortViewBtn");
-sortViewBtn.addEventListener('click', () => {
-    let sortByDate = false;
-    sortByDate = !sortByDate;
-    // fetchDataByCategories(null, sortByDate);
-})
-
 
 
 fetchData();
